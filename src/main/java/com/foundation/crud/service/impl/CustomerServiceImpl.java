@@ -55,11 +55,11 @@ public class CustomerServiceImpl implements CustomerService {
 
 
     /**
-     * Creates a new customer.
+     * Add a new customer.
      * @param customer the customer to be created
      */
     @Override
-    public void createCustomer(Customer customer) {
+    public void addCustomer(Customer customer) {
         if(customerDao.existCustomerWithEmail(customer.getEmail())){
            throw new DuplicateResourceException("Already exist a customer with email [%s]".formatted(customer.getEmail()));
         }
