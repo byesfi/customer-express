@@ -14,6 +14,7 @@ import java.util.Optional;
 @Repository("list")
 public class CustomerListDataAccessService implements CustomerDao {
 
+    public static final String THIS_METHOD_IS_NOT_IMPLEMENTED = "This method is not implemented.";
     private static List<Customer> customers;
 
     static{
@@ -81,7 +82,7 @@ public class CustomerListDataAccessService implements CustomerDao {
      */
     @Override
     public void deleteCustomer(Integer customerId) {
-        throw new UnsupportedOperationException("This method is not implemented.");
+        throw new UnsupportedOperationException(THIS_METHOD_IS_NOT_IMPLEMENTED);
     }
 
     /**
@@ -92,6 +93,17 @@ public class CustomerListDataAccessService implements CustomerDao {
      */
     @Override
     public boolean existCustomerWithEmail(String email) {
-        throw new UnsupportedOperationException("This method is not implemented.");
+        throw new UnsupportedOperationException(THIS_METHOD_IS_NOT_IMPLEMENTED);
+    }
+
+    /**
+     * Checks if a customer with the given ID exists.
+     *
+     * @param customerId the customer ID to check for existence
+     * @return {@code true} if a customer with the ID exists, {@code false} otherwise
+     */
+    @Override
+    public boolean existCustomerWithID(Integer customerId) {
+        throw new UnsupportedOperationException(THIS_METHOD_IS_NOT_IMPLEMENTED);
     }
 }

@@ -51,4 +51,12 @@ public interface CustomerDao {
      * @return {@code true} if a customer with the email exists, {@code false} otherwise
      */
     boolean existCustomerWithEmail(String email);
+
+    /**
+     * Checks if a customer with the given ID exists.
+     *
+     * @param customerId the customer ID to check for existence
+     * @return {@code true} if a customer with the ID exists, {@code false} otherwise
+     */
+    boolean existCustomerWithID(Integer customerId);
 }

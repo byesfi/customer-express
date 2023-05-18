@@ -81,7 +81,7 @@ class CustomerControllerTestIT {
                         .content(asJsonString(customer)))
                 .andExpect(MockMvcResultMatchers.status().isOk());
 
-        verify(customerService, times(1)).createCustomer(any(Customer.class));
+        verify(customerService, times(1)).addCustomer(any(Customer.class));
     }
 
     @Test
