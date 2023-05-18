@@ -1,6 +1,6 @@
 package com.foundation.crud.repository.impl;
 
-import com.foundation.crud.exception.ResourceNotFound;
+import com.foundation.crud.exception.ResourceNotFoundException;
 import com.foundation.crud.model.Customer;
 import com.foundation.crud.repository.CustomerDao;
 import com.foundation.crud.repository.jpa.CustomerRepository;
@@ -66,7 +66,7 @@ public class CustomerJpaDataAccessService implements CustomerDao {
     @Override
     public void updateCustomer(Customer customer) {
         Customer existingCustomer = customerRepository.findById(customer.getId())
-                .orElseThrow(() -> new ResourceNotFound("The customer id [%s] is not found.".formatted(customer.getId())));
+                .orElseThrow(() -> new ResourceNotFoundException("The customer id [%s] is not found.".formatted(customer.getId())));
 
         existingCustomer.setName(customer.getName());
         existingCustomer.setEmail(customer.getEmail());
@@ -82,5 +82,16 @@ public class CustomerJpaDataAccessService implements CustomerDao {
     @Override
     public void deleteCustomer(Integer customerId){
         customerRepository.deleteById(customerId);
+    }
+
+    /**
+     * Checks if a customer with the given email exists.
+     *
+     * @param email the email to check for existence
+     * @return {@code true} if a customer with the email exists, {@code false} otherwise
+     */
+    @Override
+    public boolean existCustomerWithEmail(String email) {
+       return customerRepository.existsCustomerByEmail(email);
     }
 }

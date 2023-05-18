@@ -1,6 +1,7 @@
 package com.foundation.crud.service.impl;
 
-import com.foundation.crud.exception.ResourceNotFound;
+import com.foundation.crud.exception.DuplicateResourceException;
+import com.foundation.crud.exception.ResourceNotFoundException;
 import com.foundation.crud.model.Customer;
 import com.foundation.crud.repository.CustomerDao;
 import com.foundation.crud.service.CustomerService;
@@ -33,12 +34,12 @@ public class CustomerServiceImpl implements CustomerService {
      *
      * @param customerId the ID of the customer to retrieve
      * @return the customer with the specified ID
-     * @throws ResourceNotFound if no customer is found with the given ID
+     * @throws ResourceNotFoundException if no customer is found with the given ID
      */
     @Override
     public Customer getCustomerById(Integer customerId) {
         return customerDao.selectCustomerById(customerId)
-                .orElseThrow(() -> new ResourceNotFound("Customer with id [%s] not found.".formatted(customerId)));
+                .orElseThrow(() -> new ResourceNotFoundException("Customer with id [%s] not found.".formatted(customerId)));
     }
 
 
@@ -59,6 +60,9 @@ public class CustomerServiceImpl implements CustomerService {
      */
     @Override
     public void createCustomer(Customer customer) {
+        if(customerDao.existCustomerWithEmail(customer.getEmail())){
+           throw new DuplicateResourceException("Already exist a customer with email [%s]".formatted(customer.getEmail()));
+        }
         customerDao.insertCustomer(customer);
     }
 

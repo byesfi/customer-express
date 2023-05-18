@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DisplayName("ResourceNotFound Test")
-class ResourceNotFoundTest {
+class ResourceNotFoundExceptionTest {
 
     @Test
     @DisplayName("Constructor with Message Provided")
@@ -15,7 +15,7 @@ class ResourceNotFoundTest {
         String errorMessage = "Resource not found.";
 
         // Act
-        ResourceNotFound exception = new ResourceNotFound(errorMessage);
+        ResourceNotFoundException exception = new ResourceNotFoundException(errorMessage);
 
         // Assert
         assertEquals(errorMessage, exception.getMessage());

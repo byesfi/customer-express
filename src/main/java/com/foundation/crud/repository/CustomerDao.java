@@ -36,11 +36,19 @@ public interface CustomerDao {
      * Update an existing customer object.
      * @param customer new customer information to be updated.
      */
-    public void updateCustomer(Customer customer);
+    void updateCustomer(Customer customer);
 
     /**
      * Delete a customer from the system.
      * @param customerId is the ID of the customer.
      */
-    public void deleteCustomer(Integer customerId);
+    void deleteCustomer(Integer customerId);
+
+    /**
+     * Checks if a customer with the given email exists.
+     *
+     * @param email the email to check for existence
+     * @return {@code true} if a customer with the email exists, {@code false} otherwise
+     */
+    boolean existCustomerWithEmail(String email);
 }
