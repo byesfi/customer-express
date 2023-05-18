@@ -6,6 +6,7 @@ import com.foundation.crud.repository.CustomerDao;
 import com.foundation.crud.service.CustomerService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -36,7 +37,7 @@ public class CustomerServiceImpl implements CustomerService {
      */
     @Override
     public Customer getCustomerById(Integer customerId) {
-        return customerDao.getCustomerById(customerId)
+        return customerDao.selectCustomerById(customerId)
                 .orElseThrow(() -> new ResourceNotFound("Customer with id [%s] not found.".formatted(customerId)));
     }
 
@@ -48,6 +49,37 @@ public class CustomerServiceImpl implements CustomerService {
      */
     @Override
     public List<Customer> getAllCustomers() {
-        return customerDao.getAllCustomers();
+        return customerDao.selectAllCustomers();
+    }
+
+
+    /**
+     * Creates a new customer.
+     * @param customer the customer to be created
+     */
+    @Override
+    public void createCustomer(Customer customer) {
+        customerDao.insertCustomer(customer);
+    }
+
+    /**
+     * Update an existing customer with new information.
+     *
+     * @param customer new customer information to be updated.
+     */
+    @Transactional
+    @Override
+    public void updateCustomer(Customer customer) {
+        customerDao.updateCustomer(customer);
+    }
+
+    /**
+     * Delete a customer from system.
+     *
+     * @param customerId the ID of the customer to delete.
+     */
+    @Override
+    public void deleteCustomer(Integer customerId) {
+        customerDao.deleteCustomer(customerId);
     }
 }

@@ -12,8 +12,8 @@ public interface CustomerService {
     /**
      * Retrieves a customer by their ID.
      *
-     * @param customerId the ID of the customer to retrieve
-     * @return the customer with the specified ID, or null if no customer is found
+     * @param customerId the ID of the customer to retrieve.
+     * @return the customer with the specified ID, or null if no customer is found.
      */
     Customer getCustomerById(Integer customerId);
 
@@ -24,4 +24,22 @@ public interface CustomerService {
      * @return a list of all customers
      */
     List<Customer> getAllCustomers();
+
+    /**
+     * Insert a customer into system.
+     * @param customer is the customer object to inserted.
+     */
+    void createCustomer(Customer customer);
+
+    /**
+     * Update a customer with new information.
+     * @param customer new customer information to be updated.
+     */
+    public void updateCustomer(Customer customer);
+
+    /**
+     * Delete a customer from system.
+     * @param customerId the ID of the customer to delete.
+     */
+    public void deleteCustomer(Integer customerId);
 }

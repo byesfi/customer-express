@@ -1,13 +1,15 @@
 package com.foundation.crud.exception;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.http.HttpStatus;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@DisplayName("ResourceNotFound Test")
 class ResourceNotFoundTest {
 
     @Test
+    @DisplayName("Constructor with Message Provided")
     void testConstructor_MessageProvided_CreatesInstanceWithMessage() {
         // Arrange
         String errorMessage = "Resource not found.";
