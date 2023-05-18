@@ -45,7 +45,7 @@ public class CustomerListDataAccessService implements CustomerDao {
      * @return an Optional containing the customer if found, or an empty Optional if not found
      */
     @Override
-    public Optional<Customer> getCustomerById(Integer customerId) {
+    public Optional<Customer> selectCustomerById(Integer customerId) {
         return customers.stream()
                 .filter(c -> c.getId().equals(customerId))
                 .findFirst();
@@ -57,7 +57,30 @@ public class CustomerListDataAccessService implements CustomerDao {
      * @return a List containing all the customers
      */
     @Override
-    public List<Customer> getAllCustomers() {
+    public List<Customer> selectAllCustomers() {
         return customers;
+    }
+
+    @Override
+    public void insertCustomer(Customer customer) {
+        throw new UnsupportedOperationException("This method is not implemented");
+    }
+
+    /**
+     * Update existing customer object.
+     */
+    @Override
+    public void updateCustomer(Customer customer) {
+        throw new UnsupportedOperationException("This method is not implemented");
+    }
+
+    /**
+     * Delete a customer from the system.
+     *
+     * @param customerId is the ID of the customer.
+     */
+    @Override
+    public void deleteCustomer(Integer customerId) {
+        throw new UnsupportedOperationException("This method is not implemented.");
     }
 }
