@@ -10,13 +10,14 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  * It carries a custom error message that can be used for error handling and reporting.
  */
 @ResponseStatus(code = HttpStatus.NOT_FOUND)
-public class ResourceNotFound extends RuntimeException{
+public class ResourceNotFoundException extends RuntimeException {
 
     /**
      * Constructs a new {@code ResourceNotFound} instance with the provided error message.
+     *
      * @param message the error message describing the resource not found situation.
      */
-    public ResourceNotFound(String message) {
+    public ResourceNotFoundException(String message) {
         super(message);
     }
 }

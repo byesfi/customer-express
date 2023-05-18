@@ -1,7 +1,7 @@
 package com.foundation.crud.repository;
 
 
-import com.foundation.crud.exception.ResourceNotFound;
+import com.foundation.crud.exception.ResourceNotFoundException;
 import com.foundation.crud.model.Customer;
 import com.foundation.crud.repository.impl.CustomerJpaDataAccessService;
 import com.foundation.crud.repository.jpa.CustomerRepository;
@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.times;
@@ -105,7 +106,7 @@ class CustomerJpaDataAccessServiceTest {
         when(customerRepository.findById(customerId)).thenReturn(Optional.empty());
 
         // Act & Assert
-        assertThrows(ResourceNotFound.class, () -> customerDao.updateCustomer(updatedCustomer));
+        assertThrows(ResourceNotFoundException.class, () -> customerDao.updateCustomer(updatedCustomer));
     }
 
     @Test
@@ -119,5 +120,33 @@ class CustomerJpaDataAccessServiceTest {
 
         // Assert
         verify(customerRepository, times(1)).deleteById(customerId);
+    }
+
+    @Test
+    @DisplayName("Exist customer with email: should return true when customer exists")
+    void testExistCustomerWithEmail_CustomerExists_ReturnsTrue() {
+        // Arrange
+        String existingEmail = "john.doe@example.com";
+        when(customerRepository.existsCustomerByEmail(existingEmail)).thenReturn(true);
+
+        // Act
+        boolean result = customerDao.existCustomerWithEmail(existingEmail);
+
+        // Assert
+        assertTrue(result);
+    }
+
+    @Test
+    @DisplayName("Exist customer with email: should return false when customer does not exist")
+    void testExistCustomerWithEmail_CustomerDoesNotExist_ReturnsFalse() {
+        // Arrange
+        String nonExistingEmail = "jane.smith@example.com";
+        when(customerRepository.existsCustomerByEmail(nonExistingEmail)).thenReturn(false);
+
+        // Act
+        boolean result = customerDao.existCustomerWithEmail(nonExistingEmail);
+
+        // Assert
+        assertFalse(result);
     }
 }

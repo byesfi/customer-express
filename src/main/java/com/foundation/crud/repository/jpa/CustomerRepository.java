@@ -9,4 +9,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * It extends the JpaRepository interface, which provides basic CRUD operations and querying capabilities.
  */
 public interface CustomerRepository extends JpaRepository<Customer, Integer> {
+
+    boolean existsCustomerByEmail(String email);
 }

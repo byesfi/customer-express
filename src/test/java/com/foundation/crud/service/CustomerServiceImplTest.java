@@ -1,6 +1,7 @@
 package com.foundation.crud.service;
 
-import com.foundation.crud.exception.ResourceNotFound;
+import com.foundation.crud.exception.DuplicateResourceException;
+import com.foundation.crud.exception.ResourceNotFoundException;
 import com.foundation.crud.model.Customer;
 import com.foundation.crud.repository.CustomerDao;
 import com.foundation.crud.service.impl.CustomerServiceImpl;
@@ -62,7 +63,7 @@ class CustomerServiceImplTest {
         when(customerDao.selectCustomerById(customerId)).thenReturn(Optional.empty());
 
         // Act & Assert
-        assertThrows(ResourceNotFound.class, () -> customerService.getCustomerById(customerId));
+        assertThrows(ResourceNotFoundException.class, () -> customerService.getCustomerById(customerId));
         verify(customerDao, times(1)).selectCustomerById(customerId);
     }
 
@@ -86,17 +87,32 @@ class CustomerServiceImplTest {
     }
 
     @Test
-    @DisplayName("Create Customer - Valid Customer")
-    void createCustomer_ValidCustomer_CallsInsertCustomer() {
+    @DisplayName("Create customer: should insert customer when email is unique")
+    void testCreateCustomer_EmailIsUnique_InsertsCustomer() {
         // Arrange
         Customer customer = new Customer();
-        // Set customer properties
+        customer.setEmail("john.doe@example.com");
+
+        when(customerDao.existCustomerWithEmail(customer.getEmail())).thenReturn(false);
 
         // Act
         customerService.createCustomer(customer);
 
         // Assert
-        verify(customerDao, times(1)).insertCustomer(customer);
+        verify(customerDao).insertCustomer(customer);
+    }
+
+    @Test
+    @DisplayName("Create customer: should throw DuplicateResourceException when email already exists")
+    void testCreateCustomer_EmailAlreadyExists_ThrowsDuplicateResourceException() {
+        // Arrange
+        Customer customer = new Customer();
+        customer.setEmail("john.doe@example.com");
+
+        when(customerDao.existCustomerWithEmail(customer.getEmail())).thenReturn(true);
+
+        // Act & Assert
+        assertThrows(DuplicateResourceException.class, () -> customerService.createCustomer(customer));
     }
 
     @Test
@@ -131,9 +147,9 @@ class CustomerServiceImplTest {
     void deleteCustomer_InvalidCustomerId_ThrowsResourceNotFound() {
         // Arrange
         Integer customerId = 1;
-        doThrow(ResourceNotFound.class).when(customerDao).deleteCustomer(customerId);
+        doThrow(ResourceNotFoundException.class).when(customerDao).deleteCustomer(customerId);
 
         // Act & Assert
-        assertThrows(ResourceNotFound.class, () -> customerService.deleteCustomer(customerId));
+        assertThrows(ResourceNotFoundException.class, () -> customerService.deleteCustomer(customerId));
     }
 }

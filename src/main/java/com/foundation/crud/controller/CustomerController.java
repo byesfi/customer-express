@@ -28,7 +28,7 @@ public class CustomerController {
      *
      * @param customerService the customer service to be used for retrieving customer data.
      */
-    public CustomerController(CustomerService customerService){
+    public CustomerController(CustomerService customerService) {
         this.customerService = customerService;
     }
 
@@ -38,7 +38,7 @@ public class CustomerController {
      * @return a list of all customers.
      */
     @GetMapping("customers")
-    public List<Customer> getCustomers(){
+    public List<Customer> getCustomers() {
         return customerService.getAllCustomers();
     }
 
@@ -49,7 +49,7 @@ public class CustomerController {
      * @return the customer with the specified ID.
      */
     @GetMapping("customers/{customerId}")
-    public Customer getCustomer(@PathVariable Integer customerId){
+    public Customer getCustomer(@PathVariable Integer customerId) {
         return customerService.getCustomerById(customerId);
     }
 
@@ -57,12 +57,12 @@ public class CustomerController {
      * Create a new customer.
      */
     @PostMapping("customers")
-    public void createCustomer(@RequestBody Customer customer){
+    public void createCustomer(@RequestBody Customer customer) {
         customerService.createCustomer(customer);
     }
 
     @PatchMapping("customers")
-    public void updateCustomer(@RequestBody Customer customer){
+    public void updateCustomer(@RequestBody Customer customer) {
         customerService.updateCustomer(customer);
     }
 
@@ -70,7 +70,7 @@ public class CustomerController {
      * Delete a customer.
      */
     @DeleteMapping("customers/{customerId}")
-    public void deleteCustomer(@PathVariable Integer customerId){
+    public void deleteCustomer(@PathVariable Integer customerId) {
         customerService.deleteCustomer(customerId);
     }
 }

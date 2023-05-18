@@ -83,4 +83,15 @@ public class CustomerListDataAccessService implements CustomerDao {
     public void deleteCustomer(Integer customerId) {
         throw new UnsupportedOperationException("This method is not implemented.");
     }
+
+    /**
+     * Checks if a customer with the given email exists.
+     *
+     * @param email the email to check for existence
+     * @return {@code true} if a customer with the email exists, {@code false} otherwise
+     */
+    @Override
+    public boolean existCustomerWithEmail(String email) {
+        throw new UnsupportedOperationException("This method is not implemented.");
+    }
 }
