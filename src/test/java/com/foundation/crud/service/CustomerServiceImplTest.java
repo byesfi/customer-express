@@ -96,7 +96,7 @@ class CustomerServiceImplTest {
         when(customerDao.existCustomerWithEmail(customer.getEmail())).thenReturn(false);
 
         // Act
-        customerService.createCustomer(customer);
+        customerService.addCustomer(customer);
 
         // Assert
         verify(customerDao).insertCustomer(customer);
@@ -112,7 +112,7 @@ class CustomerServiceImplTest {
         when(customerDao.existCustomerWithEmail(customer.getEmail())).thenReturn(true);
 
         // Act & Assert
-        assertThrows(DuplicateResourceException.class, () -> customerService.createCustomer(customer));
+        assertThrows(DuplicateResourceException.class, () -> customerService.addCustomer(customer));
     }
 
     @Test
@@ -120,7 +120,6 @@ class CustomerServiceImplTest {
     void updateCustomer_ValidCustomer_CallsUpdateCustomer() {
         // Arrange
         Customer customer = new Customer();
-        // Set customer properties
 
         // Act
         customerService.updateCustomer(customer);
@@ -134,7 +133,7 @@ class CustomerServiceImplTest {
     void deleteCustomer_ValidCustomerId_CallsDeleteCustomer() {
         // Arrange
         Integer customerId = 1;
-
+        when(customerDao.existCustomerWithID(customerId)).thenReturn(true);
         // Act
         customerService.deleteCustomer(customerId);
 
@@ -143,11 +142,11 @@ class CustomerServiceImplTest {
     }
 
     @Test
-    @DisplayName("Update Customer - Invalid Customer ID")
+    @DisplayName("Delete Customer - Invalid Customer ID")
     void deleteCustomer_InvalidCustomerId_ThrowsResourceNotFound() {
         // Arrange
         Integer customerId = 1;
-        doThrow(ResourceNotFoundException.class).when(customerDao).deleteCustomer(customerId);
+        doThrow(ResourceNotFoundException.class).when(customerDao).existCustomerWithID(customerId);
 
         // Act & Assert
         assertThrows(ResourceNotFoundException.class, () -> customerService.deleteCustomer(customerId));

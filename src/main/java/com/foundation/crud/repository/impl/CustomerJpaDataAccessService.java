@@ -29,7 +29,7 @@ public class CustomerJpaDataAccessService implements CustomerDao {
     }
 
     /**
-     *  Retrieves a customer by their ID.
+     * Retrieves a customer by their ID.
      *
      * @param customerId the ID of the customer to retrieve
      * @return an Optional containing the customer, or an empty Optional if not found
@@ -77,11 +77,12 @@ public class CustomerJpaDataAccessService implements CustomerDao {
 
     /**
      * Delete a customer from the system.
+     *
      * @param customerId is the ID of the customer.
      */
     @Override
-    public void deleteCustomer(Integer customerId){
-        customerRepository.deleteById(customerId);
+    public void deleteCustomer(Integer customerId) {
+       customerRepository.deleteById(customerId);
     }
 
     /**
@@ -92,6 +93,17 @@ public class CustomerJpaDataAccessService implements CustomerDao {
      */
     @Override
     public boolean existCustomerWithEmail(String email) {
-       return customerRepository.existsCustomerByEmail(email);
+        return customerRepository.existsCustomerByEmail(email);
+    }
+
+    /**
+     * Checks if a customer with the given ID exists.
+     *
+     * @param customerId the customer ID to check for existence
+     * @return {@code true} if a customer with the ID exists, {@code false} otherwise
+     */
+    @Override
+    public boolean existCustomerWithID(Integer customerId) {
+        return customerRepository.findById(customerId).isPresent();
     }
 }

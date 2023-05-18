@@ -84,6 +84,10 @@ public class CustomerServiceImpl implements CustomerService {
      */
     @Override
     public void deleteCustomer(Integer customerId) {
-        customerDao.deleteCustomer(customerId);
+        if (customerDao.existCustomerWithID(customerId)) {
+            customerDao.deleteCustomer(customerId);
+        } else {
+            throw new ResourceNotFoundException("Customer with id [%s] is not found.".formatted(customerId));
+        }
     }
 }
