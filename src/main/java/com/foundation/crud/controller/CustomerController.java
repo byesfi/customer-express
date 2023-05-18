@@ -1,43 +1,51 @@
 package com.foundation.crud.controller;
 
 import com.foundation.crud.model.Customer;
+import com.foundation.crud.service.CustomerService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * REST Controller for handling customer-related API endpoints.
+ * Exposes endpoints to retrieve customers information.
+ */
 @RestController
 @RequestMapping("/api/v1/")
 public class CustomerController {
 
-    private static List<Customer> customers;
+    private final CustomerService customerService;
 
-    static{
-        customers = new ArrayList<>();
-        Customer bob = new Customer(1, "bob", "bob@email.com", 33);
-        Customer alex = new Customer(2, "alex", "alex@email.com", 18);
-        Customer joe = new Customer(3, "Joe", "joe@eamil.com", 22);
-        Customer angela = new Customer(4, "angela", "angela@email.com", 21);
-
-        customers.add(bob);
-        customers.add(alex);
-        customers.add(joe);
-        customers.add(angela);
+    /**
+     * Constructs a new instance of {@code CustomerController} with the specified {@code CustomerService}.
+     *
+     * @param customerService the customer service to be used for retrieving customer data.
+     */
+    public CustomerController(CustomerService customerService){
+        this.customerService = customerService;
     }
 
+    /**
+     * Retrieves all customers.
+     *
+     * @return a list of all customers.
+     */
     @GetMapping("customers")
     public List<Customer> getCustomers(){
-        return customers;
+        return customerService.getAllCustomers();
     }
 
-    @GetMapping("customers/{id}")
-    public Customer getCustomer(@PathVariable Integer id){
-        return customers.stream()
-                .filter(c -> c.getId().equals(id))
-                .findFirst()
-                .orElse(null);
+    /**
+     * Retrieves a specific customer by ID.
+     *
+     * @param customerId the ID of the customer to retrieve.
+     * @return the customer with the specified ID.
+     */
+    @GetMapping("customers/{customerId}")
+    public Customer getCustomer(@PathVariable Integer customerId){
+        return customerService.getCustomerById(customerId);
     }
 }
