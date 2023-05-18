@@ -18,7 +18,7 @@ import java.util.List;
  * Exposes endpoints to retrieve customers information.
  */
 @RestController
-@RequestMapping("/api/v1/")
+@RequestMapping("/api/v1/customers")
 public class CustomerController {
 
     private final CustomerService customerService;
@@ -37,7 +37,7 @@ public class CustomerController {
      *
      * @return a list of all customers.
      */
-    @GetMapping("customers")
+    @GetMapping
     public List<Customer> getCustomers() {
         return customerService.getAllCustomers();
     }
@@ -48,28 +48,37 @@ public class CustomerController {
      * @param customerId the ID of the customer to retrieve.
      * @return the customer with the specified ID.
      */
-    @GetMapping("customers/{customerId}")
+    @GetMapping("{customerId}")
     public Customer getCustomer(@PathVariable Integer customerId) {
         return customerService.getCustomerById(customerId);
     }
 
     /**
-     * Create a new customer.
+     * Registers a new customer.
+     *
+     * @param customer the customer object containing the customer details to be registered
      */
-    @PostMapping("customers")
-    public void createCustomer(@RequestBody Customer customer) {
-        customerService.createCustomer(customer);
+    @PostMapping
+    public void registerCustomer(@RequestBody Customer customer) {
+        customerService.addCustomer(customer);
     }
 
-    @PatchMapping("customers")
+    /**
+     * Updates an existing customer with the provided customer object.
+     *
+     * @param customer the customer object containing the updated information.
+     */
+    @PatchMapping
     public void updateCustomer(@RequestBody Customer customer) {
         customerService.updateCustomer(customer);
     }
 
     /**
-     * Delete a customer.
+     * Deletes a customer with the specified customer ID.
+     *
+     * @param customerId the ID of the customer to be deleted
      */
-    @DeleteMapping("customers/{customerId}")
+    @DeleteMapping("{customerId}")
     public void deleteCustomer(@PathVariable Integer customerId) {
         customerService.deleteCustomer(customerId);
     }

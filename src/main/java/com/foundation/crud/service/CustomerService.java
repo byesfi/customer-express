@@ -26,10 +26,10 @@ public interface CustomerService {
     List<Customer> getAllCustomers();
 
     /**
-     * Insert a customer into system.
+     * Add a customer into system.
      * @param customer is the customer object to inserted.
      */
-    void createCustomer(Customer customer);
+    void addCustomer(Customer customer);
 
     /**
      * Update a customer with new information.
