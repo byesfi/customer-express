@@ -1,7 +1,6 @@
 package com.foundation.crud.repository;
 
 
-import com.foundation.crud.exception.ResourceNotFoundException;
 import com.foundation.crud.model.Customer;
 import com.foundation.crud.repository.impl.CustomerJpaDataAccessService;
 import com.foundation.crud.repository.jpa.CustomerRepository;
@@ -18,7 +17,6 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -83,30 +81,13 @@ class CustomerJpaDataAccessServiceTest {
     void updateCustomer_ValidCustomer_UpdatesExistingCustomer() {
         // Arrange
         Integer customerId = 1;
-        Customer existingCustomer = new Customer(customerId, "John Doe", "john@example.com", 30);
         Customer updatedCustomer = new Customer(customerId, "Jane Smith", "jane@example.com", 25);
-
-        when(customerRepository.findById(customerId)).thenReturn(Optional.of(existingCustomer));
 
         // Act
         customerDao.updateCustomer(updatedCustomer);
 
         // Assert
-        verify(customerRepository, times(1)).findById(customerId);
-        verify(customerRepository, times(1)).save(existingCustomer);
-    }
-
-    @Test
-    @DisplayName("Update Customer - Invalid Customer ID")
-    void updateCustomer_InvalidCustomerId_ThrowsResourceNotFound() {
-        // Arrange
-        Integer customerId = 1;
-        Customer updatedCustomer = new Customer(customerId, "Jane Smith", "jane@example.com", 25);
-
-        when(customerRepository.findById(customerId)).thenReturn(Optional.empty());
-
-        // Act & Assert
-        assertThrows(ResourceNotFoundException.class, () -> customerDao.updateCustomer(updatedCustomer));
+        verify(customerRepository, times(1)).save(updatedCustomer);
     }
 
     @Test

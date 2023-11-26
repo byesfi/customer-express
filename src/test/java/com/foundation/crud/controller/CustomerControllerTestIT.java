@@ -91,12 +91,12 @@ class CustomerControllerTestIT {
         // Set customer properties
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .patch("/api/v1/customers")
+                        .patch("/api/v1/customers/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(customer)))
                 .andExpect(MockMvcResultMatchers.status().isOk());
 
-        verify(customerService, times(1)).updateCustomer(any(Customer.class));
+        verify(customerService, times(1)).updateCustomer(anyInt(), any(Customer.class));
     }
 
     @Test

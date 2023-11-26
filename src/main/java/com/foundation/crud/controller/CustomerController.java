@@ -68,9 +68,9 @@ public class CustomerController {
      *
      * @param customer the customer object containing the updated information.
      */
-    @PatchMapping
-    public void updateCustomer(@RequestBody Customer customer) {
-        customerService.updateCustomer(customer);
+    @PatchMapping("{customerId}")
+    public void updateCustomer(@PathVariable Integer customerId, @RequestBody Customer customer) {
+        customerService.updateCustomer(customerId, customer);
     }
 
     /**

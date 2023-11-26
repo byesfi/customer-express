@@ -8,6 +8,8 @@ import com.foundation.crud.service.impl.CustomerServiceImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -19,7 +21,9 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -34,6 +38,9 @@ class CustomerServiceImplTest {
 
     @InjectMocks
     private CustomerServiceImpl customerService;
+
+    @Captor
+    private ArgumentCaptor<Customer> customerCaptor;
 
     @Test
     @DisplayName("Get Customer By ID - Valid ID")
@@ -119,13 +126,42 @@ class CustomerServiceImplTest {
     @DisplayName("Update Customer - Valid Customer")
     void updateCustomer_ValidCustomer_CallsUpdateCustomer() {
         // Arrange
-        Customer customer = new Customer();
+        Integer customerId = 1;
+        Customer newUpdatedCustomer = new Customer();
+        newUpdatedCustomer.setAge(30);
+
+        Customer existingCustomer = new Customer(customerId, "John Doe", "john.doe@example.com", 25);
+        when(customerDao.selectCustomerById(customerId)).thenReturn(Optional.of(existingCustomer));
+
 
         // Act
-        customerService.updateCustomer(customer);
+        customerService.updateCustomer(customerId, newUpdatedCustomer);
 
         // Assert
-        verify(customerDao, times(1)).updateCustomer(customer);
+        verify(customerDao, times(1)).selectCustomerById(customerId);
+        verify(customerDao, times(1)).updateCustomer(customerCaptor.capture());
+
+        // Verify captured customer attributes
+        Customer capturedCustomer = customerCaptor.getValue();
+        assertEquals("John Doe", capturedCustomer.getName());
+        assertEquals("john.doe@example.com", capturedCustomer.getEmail());
+        assertEquals(30, capturedCustomer.getAge());
+    }
+
+    @Test
+    @DisplayName("Update Customer - Invalid Customer ID")
+    void updateCustomer_InvalidCustomerId_ThrowsResourceNotFound() {
+        // Arrange
+        Integer customerId = 1;
+        Customer updatedCustomer = new Customer(customerId, "Jane Smith", "jane@example.com", 25);
+
+        when(customerDao.selectCustomerById(customerId)).thenReturn(Optional.empty());
+
+        // Act & Assert
+        assertThrows(ResourceNotFoundException.class, () -> customerService.updateCustomer(customerId, updatedCustomer));
+        verify(customerDao, times(1)).selectCustomerById(customerId);
+        verify(customerDao, never()).updateCustomer(any(Customer.class));
+
     }
 
     @Test
