@@ -35,7 +35,7 @@ public interface CustomerService {
      * Update a customer with new information.
      * @param customer new customer information to be updated.
      */
-    public void updateCustomer(Customer customer);
+    public void updateCustomer(Integer customerId, Customer customer);
 
     /**
      * Delete a customer from system.

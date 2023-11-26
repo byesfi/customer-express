@@ -65,14 +65,7 @@ public class CustomerJpaDataAccessService implements CustomerDao {
     @Transactional
     @Override
     public void updateCustomer(Customer customer) {
-        Customer existingCustomer = customerRepository.findById(customer.getId())
-                .orElseThrow(() -> new ResourceNotFoundException("The customer id [%s] is not found.".formatted(customer.getId())));
-
-        existingCustomer.setName(customer.getName());
-        existingCustomer.setEmail(customer.getEmail());
-        existingCustomer.setAge(customer.getAge());
-
-        customerRepository.save(existingCustomer);
+        customerRepository.save(customer);
     }
 
     /**

@@ -5,6 +5,7 @@ import com.foundation.crud.exception.ResourceNotFoundException;
 import com.foundation.crud.model.Customer;
 import com.foundation.crud.repository.CustomerDao;
 import com.foundation.crud.service.CustomerService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -69,12 +70,23 @@ public class CustomerServiceImpl implements CustomerService {
     /**
      * Update an existing customer with new information.
      *
+     * @param customerId customer id.
      * @param customer new customer information to be updated.
      */
     @Transactional
     @Override
-    public void updateCustomer(Customer customer) {
-        customerDao.updateCustomer(customer);
+    public void updateCustomer(Integer customerId, Customer customer) {
+        Customer existingCustomer = getCustomerById(customerId);
+        if (StringUtils.isNoneBlank(customer.getName())) {
+            existingCustomer.setName(customer.getName());
+        }
+        if (StringUtils.isNoneBlank(customer.getEmail())) {
+            existingCustomer.setEmail(customer.getEmail());
+        }
+        if (customer.getAge() >= 0) {
+            existingCustomer.setAge(customer.getAge());
+        }
+        customerDao.updateCustomer(existingCustomer);
     }
 
     /**
