@@ -58,5 +58,5 @@ public interface CustomerDao {
      * @param customerId the customer ID to check for existence
      * @return {@code true} if a customer with the ID exists, {@code false} otherwise
      */
-    boolean existCustomerWithID(Integer customerId);
+    boolean existCustomerWithId(Integer customerId);
 }

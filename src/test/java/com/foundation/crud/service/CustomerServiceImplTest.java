@@ -169,7 +169,7 @@ class CustomerServiceImplTest {
     void deleteCustomer_ValidCustomerId_CallsDeleteCustomer() {
         // Arrange
         Integer customerId = 1;
-        when(customerDao.existCustomerWithID(customerId)).thenReturn(true);
+        when(customerDao.existCustomerWithId(customerId)).thenReturn(true);
         // Act
         customerService.deleteCustomer(customerId);
 
@@ -182,7 +182,7 @@ class CustomerServiceImplTest {
     void deleteCustomer_InvalidCustomerId_ThrowsResourceNotFound() {
         // Arrange
         Integer customerId = 1;
-        doThrow(ResourceNotFoundException.class).when(customerDao).existCustomerWithID(customerId);
+        doThrow(ResourceNotFoundException.class).when(customerDao).existCustomerWithId(customerId);
 
         // Act & Assert
         assertThrows(ResourceNotFoundException.class, () -> customerService.deleteCustomer(customerId));

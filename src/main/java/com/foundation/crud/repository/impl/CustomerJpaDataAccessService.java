@@ -96,7 +96,7 @@ public class CustomerJpaDataAccessService implements CustomerDao {
      * @return {@code true} if a customer with the ID exists, {@code false} otherwise
      */
     @Override
-    public boolean existCustomerWithID(Integer customerId) {
-        return customerRepository.findById(customerId).isPresent();
+    public boolean existCustomerWithId(Integer customerId) {
+        return customerRepository.existsCustomerById(customerId);
     }
 }

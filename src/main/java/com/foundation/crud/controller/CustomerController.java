@@ -64,22 +64,23 @@ public class CustomerController {
     }
 
     /**
-     * Updates an existing customer with the provided customer object.
+     * Updates an existing customer with the provided customer information.
      *
+     * @param customerId the ID of the customer to be updated.
      * @param customer the customer object containing the updated information.
      */
     @PatchMapping("{customerId}")
-    public void updateCustomer(@PathVariable Integer customerId, @RequestBody Customer customer) {
+    public void updateCustomer(@PathVariable("customerId") Integer customerId, @RequestBody Customer customer) {
         customerService.updateCustomer(customerId, customer);
     }
 
     /**
      * Deletes a customer with the specified customer ID.
      *
-     * @param customerId the ID of the customer to be deleted
+     * @param customerId the ID of the customer to be deleted.
      */
     @DeleteMapping("{customerId}")
-    public void deleteCustomer(@PathVariable Integer customerId) {
+    public void deleteCustomer(@PathVariable("customerId") Integer customerId) {
         customerService.deleteCustomer(customerId);
     }
 }

@@ -103,7 +103,7 @@ public class CustomerListDataAccessService implements CustomerDao {
      * @return {@code true} if a customer with the ID exists, {@code false} otherwise
      */
     @Override
-    public boolean existCustomerWithID(Integer customerId) {
+    public boolean existCustomerWithId(Integer customerId) {
         throw new UnsupportedOperationException(THIS_METHOD_IS_NOT_IMPLEMENTED);
     }
 }
