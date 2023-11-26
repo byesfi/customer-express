@@ -3,7 +3,6 @@ package com.foundation.crud.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.foundation.crud.dto.CustomerRegistrationRequest;
 import com.foundation.crud.dto.CustomerUpdateRequest;
-import com.foundation.crud.mapper.CustomerMapper;
 import com.foundation.crud.model.Customer;
 import com.foundation.crud.service.CustomerService;
 import org.junit.jupiter.api.DisplayName;
@@ -83,7 +82,7 @@ class CustomerControllerTestIT {
                         .content(asJsonString(customerRegistrationRequest)))
                 .andExpect(MockMvcResultMatchers.status().isOk());
 
-        verify(customerService, times(1)).addCustomer(any(Customer.class));
+        verify(customerService, times(1)).addCustomer(any(CustomerRegistrationRequest.class));
     }
 
     @Test
@@ -97,7 +96,7 @@ class CustomerControllerTestIT {
                         .content(asJsonString(customerUpdateRequest)))
                 .andExpect(MockMvcResultMatchers.status().isOk());
 
-        verify(customerService, times(1)).updateCustomer(anyInt(), any(Customer.class));
+        verify(customerService, times(1)).updateCustomer(anyInt(), any(CustomerUpdateRequest.class));
     }
 
     @Test

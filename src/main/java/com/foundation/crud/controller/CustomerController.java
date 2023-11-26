@@ -2,7 +2,6 @@ package com.foundation.crud.controller;
 
 import com.foundation.crud.dto.CustomerRegistrationRequest;
 import com.foundation.crud.dto.CustomerUpdateRequest;
-import com.foundation.crud.mapper.CustomerMapper;
 import com.foundation.crud.model.Customer;
 import com.foundation.crud.service.CustomerService;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -63,7 +62,7 @@ public class CustomerController {
      */
     @PostMapping
     public void registerCustomer(@RequestBody CustomerRegistrationRequest customerRegistrationRequest) {
-        customerService.addCustomer(CustomerMapper.INSTANCE.toCustomer(customerRegistrationRequest));
+        customerService.addCustomer(customerRegistrationRequest);
     }
 
     /**
@@ -74,7 +73,7 @@ public class CustomerController {
      */
     @PatchMapping("{customerId}")
     public void updateCustomer(@PathVariable("customerId") Integer customerId, @RequestBody CustomerUpdateRequest customerUpdateRequest) {
-        customerService.updateCustomer(customerId, CustomerMapper.INSTANCE.toCustomer(customerUpdateRequest));
+        customerService.updateCustomer(customerId, customerUpdateRequest);
     }
 
     /**
