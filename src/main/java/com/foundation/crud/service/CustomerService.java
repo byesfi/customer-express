@@ -1,5 +1,7 @@
 package com.foundation.crud.service;
 
+import com.foundation.crud.dto.CustomerRegistrationRequest;
+import com.foundation.crud.dto.CustomerUpdateRequest;
 import com.foundation.crud.model.Customer;
 
 import java.util.List;
@@ -27,15 +29,17 @@ public interface CustomerService {
 
     /**
      * Add a customer into system.
-     * @param customer is the customer object to inserted.
+     *
+     * @param registrationRequest is the CustomerRegistrationRequest object to inserted
      */
-    void addCustomer(Customer customer);
+    void addCustomer(CustomerRegistrationRequest registrationRequest);
 
     /**
      * Update a customer with new information.
-     * @param customer new customer information to be updated.
+     *
+     * @param updateRequest new CustomerUpdateRequest information to be updated.
      */
-    public void updateCustomer(Integer customerId, Customer customer);
+    public void updateCustomer(Integer customerId, CustomerUpdateRequest updateRequest);
 
     /**
      * Delete a customer from system.

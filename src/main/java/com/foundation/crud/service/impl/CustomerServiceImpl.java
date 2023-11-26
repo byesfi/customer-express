@@ -1,7 +1,11 @@
 package com.foundation.crud.service.impl;
 
+import com.foundation.crud.dto.CustomerRegistrationRequest;
+import com.foundation.crud.dto.CustomerUpdateRequest;
 import com.foundation.crud.exception.DuplicateResourceException;
+import com.foundation.crud.exception.RequestValidationException;
 import com.foundation.crud.exception.ResourceNotFoundException;
+import com.foundation.crud.mapper.CustomerMapper;
 import com.foundation.crud.model.Customer;
 import com.foundation.crud.repository.CustomerDao;
 import com.foundation.crud.service.CustomerService;
@@ -11,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Implementation of the {@link CustomerService} interface.
@@ -57,34 +62,52 @@ public class CustomerServiceImpl implements CustomerService {
 
     /**
      * Add a new customer.
-     * @param customer the customer to be created
+     *
+     * @param registrationRequest the CustomerRegistrationRequest to be created.
      */
     @Override
-    public void addCustomer(Customer customer) {
-        if(customerDao.existCustomerWithEmail(customer.getEmail())){
-           throw new DuplicateResourceException("Already exist a customer with email [%s]".formatted(customer.getEmail()));
+    public void addCustomer(CustomerRegistrationRequest registrationRequest) {
+        if(customerDao.existCustomerWithEmail(registrationRequest.email())){
+           throw new DuplicateResourceException("Already exist a customer with email [%s]".formatted(registrationRequest.email()));
         }
-        customerDao.insertCustomer(customer);
+        customerDao.insertCustomer(CustomerMapper.INSTANCE.toCustomer(registrationRequest));
     }
 
     /**
      * Update an existing customer with new information.
      *
-     * @param customerId customer id.
-     * @param customer new customer information to be updated.
+     * @param customerId            customer id.
+     * @param updateRequest new customer update request.
      */
     @Transactional
     @Override
-    public void updateCustomer(Integer customerId, Customer customer) {
+    public void updateCustomer(Integer customerId, CustomerUpdateRequest updateRequest) {
         Customer existingCustomer = getCustomerById(customerId);
-        if (StringUtils.isNoneBlank(customer.getName())) {
-            existingCustomer.setName(customer.getName());
+
+        boolean change = false;
+
+        if (StringUtils.isNoneBlank(updateRequest.name()) && !existingCustomer.getName().equals(updateRequest.name())) {
+            existingCustomer.setName(updateRequest.name());
+            change = true;
         }
-        if (StringUtils.isNoneBlank(customer.getEmail())) {
-            existingCustomer.setEmail(customer.getEmail());
+
+        if (StringUtils.isNoneBlank(updateRequest.email()) && !existingCustomer.getEmail().equals(updateRequest.email())) {
+            if (customerDao.existCustomerWithEmail(updateRequest.email())) {
+                throw new DuplicateResourceException(
+                        "email already taken"
+                );
+            }
+            existingCustomer.setEmail(updateRequest.email());
+            change = true;
         }
-        if (customer.getAge() >= 0) {
-            existingCustomer.setAge(customer.getAge());
+
+        if (!Objects.equals(existingCustomer.getAge(), updateRequest.age()) && updateRequest.age() >= 0) {
+            existingCustomer.setAge(updateRequest.age());
+            change = true;
+        }
+
+        if (!change) {
+            throw new RequestValidationException("no data changes found");
         }
         customerDao.updateCustomer(existingCustomer);
     }

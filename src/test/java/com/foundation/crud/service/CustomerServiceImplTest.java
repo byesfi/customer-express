@@ -1,6 +1,9 @@
 package com.foundation.crud.service;
 
+import com.foundation.crud.dto.CustomerRegistrationRequest;
+import com.foundation.crud.dto.CustomerUpdateRequest;
 import com.foundation.crud.exception.DuplicateResourceException;
+import com.foundation.crud.exception.RequestValidationException;
 import com.foundation.crud.exception.ResourceNotFoundException;
 import com.foundation.crud.model.Customer;
 import com.foundation.crud.repository.CustomerDao;
@@ -48,6 +51,8 @@ class CustomerServiceImplTest {
         // Arrange
         Integer customerId = 1;
         Customer customer = new Customer(customerId, "John Doe", "john.doe@example.com", 25);
+
+        // Mock dependencies
         when(customerDao.selectCustomerById(customerId)).thenReturn(Optional.of(customer));
 
         // Act
@@ -67,6 +72,8 @@ class CustomerServiceImplTest {
     void testGetCustomerById_InvalidId_ThrowsResourceNotFound() {
         // Arrange
         Integer customerId = 1;
+
+        // Mock dependencies
         when(customerDao.selectCustomerById(customerId)).thenReturn(Optional.empty());
 
         // Act & Assert
@@ -81,6 +88,8 @@ class CustomerServiceImplTest {
         List<Customer> customers = new ArrayList<>();
         customers.add(new Customer(1, "John Doe", "john.doe@example.com", 25));
         customers.add(new Customer(2, "Jane Smith", "jane.smith@example.com", 30));
+
+        // Mock dependencies
         when(customerDao.selectAllCustomers()).thenReturn(customers);
 
         // Act
@@ -97,29 +106,29 @@ class CustomerServiceImplTest {
     @DisplayName("Create customer: should insert customer when email is unique")
     void testCreateCustomer_EmailIsUnique_InsertsCustomer() {
         // Arrange
-        Customer customer = new Customer();
-        customer.setEmail("john.doe@example.com");
+        CustomerRegistrationRequest customerRegistrationRequest = new CustomerRegistrationRequest("John Doe", "john.doe@example.com", 25 );
 
-        when(customerDao.existCustomerWithEmail(customer.getEmail())).thenReturn(false);
+        // Mock dependencies
+        when(customerDao.existCustomerWithEmail(customerRegistrationRequest.email())).thenReturn(false);
 
         // Act
-        customerService.addCustomer(customer);
+        customerService.addCustomer(customerRegistrationRequest);
 
         // Assert
-        verify(customerDao).insertCustomer(customer);
+        verify(customerDao).insertCustomer(any(Customer.class));
     }
 
     @Test
     @DisplayName("Create customer: should throw DuplicateResourceException when email already exists")
     void testCreateCustomer_EmailAlreadyExists_ThrowsDuplicateResourceException() {
         // Arrange
-        Customer customer = new Customer();
-        customer.setEmail("john.doe@example.com");
+        CustomerRegistrationRequest customerRegistrationRequest = new CustomerRegistrationRequest("John Doe", "john.doe@example.com", 25 );
 
-        when(customerDao.existCustomerWithEmail(customer.getEmail())).thenReturn(true);
+        // Mock dependencies
+        when(customerDao.existCustomerWithEmail(customerRegistrationRequest.email())).thenReturn(true);
 
         // Act & Assert
-        assertThrows(DuplicateResourceException.class, () -> customerService.addCustomer(customer));
+        assertThrows(DuplicateResourceException.class, () -> customerService.addCustomer(customerRegistrationRequest));
     }
 
     @Test
@@ -127,15 +136,16 @@ class CustomerServiceImplTest {
     void updateCustomer_ValidCustomer_CallsUpdateCustomer() {
         // Arrange
         Integer customerId = 1;
-        Customer newUpdatedCustomer = new Customer();
-        newUpdatedCustomer.setAge(30);
+        CustomerUpdateRequest customerUpdateRequest = new CustomerUpdateRequest("John Doe", "john.doe@example.com", 30);
+        Customer existingCustomer = new Customer(customerId, "Old Name", "old.name@example.com", 25);
 
-        Customer existingCustomer = new Customer(customerId, "John Doe", "john.doe@example.com", 25);
+        // Mock dependencies
         when(customerDao.selectCustomerById(customerId)).thenReturn(Optional.of(existingCustomer));
+        when(customerDao.existCustomerWithEmail(customerUpdateRequest.email())).thenReturn(false);
 
 
         // Act
-        customerService.updateCustomer(customerId, newUpdatedCustomer);
+        customerService.updateCustomer(customerId, customerUpdateRequest);
 
         // Assert
         verify(customerDao, times(1)).selectCustomerById(customerId);
@@ -153,15 +163,57 @@ class CustomerServiceImplTest {
     void updateCustomer_InvalidCustomerId_ThrowsResourceNotFound() {
         // Arrange
         Integer customerId = 1;
-        Customer updatedCustomer = new Customer(customerId, "Jane Smith", "jane@example.com", 25);
+        CustomerUpdateRequest customerUpdateRequest = new CustomerUpdateRequest("Jane Smith", "jane@example.com", 25);
 
+        // Mock dependencies
         when(customerDao.selectCustomerById(customerId)).thenReturn(Optional.empty());
 
         // Act & Assert
-        assertThrows(ResourceNotFoundException.class, () -> customerService.updateCustomer(customerId, updatedCustomer));
+        assertThrows(ResourceNotFoundException.class, () -> customerService.updateCustomer(customerId, customerUpdateRequest));
         verify(customerDao, times(1)).selectCustomerById(customerId);
         verify(customerDao, never()).updateCustomer(any(Customer.class));
 
+    }
+
+    @Test
+    @DisplayName("Update Customer - Already Existing Customer Email")
+    void testUpdateCustomer_WithExistingEmail() {
+        // Arrange
+        Integer customerId = 1;
+        CustomerUpdateRequest updateRequest = new CustomerUpdateRequest("New Name", "existing.email@example.com", 30);
+        Customer existingCustomer = new Customer(customerId, "Old Name", "old.email@example.com", 25);
+
+        // Mock dependencies
+        when(customerDao.existCustomerWithEmail(updateRequest.email())).thenReturn(true);
+        when(customerDao.selectCustomerById(customerId)).thenReturn(Optional.of(existingCustomer));
+
+        // Act and Assert
+        DuplicateResourceException exception = assertThrows(DuplicateResourceException.class,
+                () -> customerService.updateCustomer(customerId, updateRequest));
+        assertEquals("email already taken", exception.getMessage());
+
+        // Verify that customerDao.updateCustomer was not called
+        verify(customerDao, never()).updateCustomer(existingCustomer);
+    }
+
+    @Test
+    @DisplayName("Update Customer - No Changes")
+    void testUpdateCustomer_NoChanges() {
+        // Arrange
+        Integer customerId = 1;
+        CustomerUpdateRequest updateRequest = new CustomerUpdateRequest(null, null, -1); // No changes
+        Customer existingCustomer = new Customer(customerId, "Old Name", "old.email@example.com", 25);
+
+        // Mock dependencies
+        when(customerDao.selectCustomerById(customerId)).thenReturn(Optional.of(existingCustomer));
+
+        // Act and Assert
+        RequestValidationException exception = assertThrows(RequestValidationException.class,
+                () -> customerService.updateCustomer(customerId, updateRequest));
+        assertEquals("no data changes found", exception.getMessage());
+
+        // Verify that customerDao.updateCustomer was not called
+        verify(customerDao, never()).updateCustomer(existingCustomer);
     }
 
     @Test
@@ -170,6 +222,7 @@ class CustomerServiceImplTest {
         // Arrange
         Integer customerId = 1;
         when(customerDao.existCustomerWithId(customerId)).thenReturn(true);
+
         // Act
         customerService.deleteCustomer(customerId);
 
