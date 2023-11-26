@@ -1,5 +1,8 @@
 package com.foundation.crud.controller;
 
+import com.foundation.crud.dto.CustomerRegistrationRequest;
+import com.foundation.crud.dto.CustomerUpdateRequest;
+import com.foundation.crud.mapper.CustomerMapper;
 import com.foundation.crud.model.Customer;
 import com.foundation.crud.service.CustomerService;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -49,29 +52,29 @@ public class CustomerController {
      * @return the customer with the specified ID.
      */
     @GetMapping("{customerId}")
-    public Customer getCustomer(@PathVariable Integer customerId) {
+    public Customer getCustomer(@PathVariable("customerId") Integer customerId) {
         return customerService.getCustomerById(customerId);
     }
 
     /**
      * Registers a new customer.
      *
-     * @param customer the customer object containing the customer details to be registered
+     * @param customerRegistrationRequest the customerRegistrationRequest object containing the customer details to be registered
      */
     @PostMapping
-    public void registerCustomer(@RequestBody Customer customer) {
-        customerService.addCustomer(customer);
+    public void registerCustomer(@RequestBody CustomerRegistrationRequest customerRegistrationRequest) {
+        customerService.addCustomer(CustomerMapper.INSTANCE.toCustomer(customerRegistrationRequest));
     }
 
     /**
      * Updates an existing customer with the provided customer information.
      *
      * @param customerId the ID of the customer to be updated.
-     * @param customer the customer object containing the updated information.
+     * @param customerUpdateRequest the customerUpdateRequest object containing the updated information.
      */
     @PatchMapping("{customerId}")
-    public void updateCustomer(@PathVariable("customerId") Integer customerId, @RequestBody Customer customer) {
-        customerService.updateCustomer(customerId, customer);
+    public void updateCustomer(@PathVariable("customerId") Integer customerId, @RequestBody CustomerUpdateRequest customerUpdateRequest) {
+        customerService.updateCustomer(customerId, CustomerMapper.INSTANCE.toCustomer(customerUpdateRequest));
     }
 
     /**

@@ -1,6 +1,9 @@
 package com.foundation.crud.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.foundation.crud.dto.CustomerRegistrationRequest;
+import com.foundation.crud.dto.CustomerUpdateRequest;
+import com.foundation.crud.mapper.CustomerMapper;
 import com.foundation.crud.model.Customer;
 import com.foundation.crud.service.CustomerService;
 import org.junit.jupiter.api.DisplayName;
@@ -72,13 +75,12 @@ class CustomerControllerTestIT {
     @Test
     @DisplayName("Create customer - Returns successful response")
     void testCreateCustomer() throws Exception {
-        Customer customer = new Customer();
-        // Set customer properties
+        CustomerRegistrationRequest customerRegistrationRequest = new CustomerRegistrationRequest("John Doe", "john.doe@email.com", 25);
 
         mockMvc.perform(MockMvcRequestBuilders
                         .post("/api/v1/customers")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(asJsonString(customer)))
+                        .content(asJsonString(customerRegistrationRequest)))
                 .andExpect(MockMvcResultMatchers.status().isOk());
 
         verify(customerService, times(1)).addCustomer(any(Customer.class));
@@ -87,13 +89,12 @@ class CustomerControllerTestIT {
     @Test
     @DisplayName("Update customer - Returns successful response")
     void testUpdateCustomer() throws Exception {
-        Customer customer = new Customer();
-        // Set customer properties
+        CustomerUpdateRequest customerUpdateRequest = new CustomerUpdateRequest("John Doe", "john.doe@email.com", 25);
 
         mockMvc.perform(MockMvcRequestBuilders
                         .patch("/api/v1/customers/1")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(asJsonString(customer)))
+                        .content(asJsonString(customerUpdateRequest)))
                 .andExpect(MockMvcResultMatchers.status().isOk());
 
         verify(customerService, times(1)).updateCustomer(anyInt(), any(Customer.class));
