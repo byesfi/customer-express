@@ -35,7 +35,7 @@ public class CustomerJpaDataAccessService implements CustomerDao {
      * @return an Optional containing the customer, or an empty Optional if not found
      */
     @Override
-    public Optional<Customer> selectCustomerById(Integer customerId) {
+    public Optional<Customer> selectCustomerById(Long customerId) {
         return customerRepository.findById(customerId);
     }
 
@@ -74,7 +74,7 @@ public class CustomerJpaDataAccessService implements CustomerDao {
      * @param customerId is the ID of the customer.
      */
     @Override
-    public void deleteCustomer(Integer customerId) {
+    public void deleteCustomer(Long customerId) {
        customerRepository.deleteById(customerId);
     }
 
@@ -96,7 +96,7 @@ public class CustomerJpaDataAccessService implements CustomerDao {
      * @return {@code true} if a customer with the ID exists, {@code false} otherwise
      */
     @Override
-    public boolean existCustomerWithId(Integer customerId) {
+    public boolean existCustomerWithId(Long customerId) {
         return customerRepository.existsCustomerById(customerId);
     }
 }

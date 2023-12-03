@@ -8,8 +8,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * The CustomerRepository interface provides data access operations for the Customer entity using Spring Data JPA.
  * It extends the JpaRepository interface, which provides basic CRUD operations and querying capabilities.
  */
-public interface CustomerRepository extends JpaRepository<Customer, Integer> {
+public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
     boolean existsCustomerByEmail(String email);
-    boolean existsCustomerById(Integer customerId);
+    boolean existsCustomerById(Long customerId);
 }

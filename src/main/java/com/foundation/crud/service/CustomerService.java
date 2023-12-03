@@ -17,7 +17,7 @@ public interface CustomerService {
      * @param customerId the ID of the customer to retrieve.
      * @return the customer with the specified ID, or null if no customer is found.
      */
-    Customer getCustomerById(Integer customerId);
+    Customer getCustomerById(Long customerId);
 
 
     /**
@@ -39,11 +39,11 @@ public interface CustomerService {
      *
      * @param updateRequest new CustomerUpdateRequest information to be updated.
      */
-    public void updateCustomer(Integer customerId, CustomerUpdateRequest updateRequest);
+    public void updateCustomer(Long customerId, CustomerUpdateRequest updateRequest);
 
     /**
      * Delete a customer from system.
      * @param customerId the ID of the customer to delete.
      */
-    public void deleteCustomer(Integer customerId);
+    public void deleteCustomer(Long customerId);
 }

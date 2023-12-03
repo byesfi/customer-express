@@ -19,10 +19,10 @@ public class CustomerListDataAccessService implements CustomerDao {
 
     static{
         customers = new ArrayList<>();
-        Customer bob = new Customer(1, "bob", "bob@email.com", 33);
-        Customer alex = new Customer(2, "alex", "alex@email.com", 18);
-        Customer joe = new Customer(3, "Joe", "joe@eamil.com", 22);
-        Customer angela = new Customer(4, "angela", "angela@email.com", 21);
+        Customer bob = new Customer(1L, "bob", "bob@email.com", 33);
+        Customer alex = new Customer(2L, "alex", "alex@email.com", 18);
+        Customer joe = new Customer(3L, "Joe", "joe@eamil.com", 22);
+        Customer angela = new Customer(4L, "angela", "angela@email.com", 21);
 
         customers.add(bob);
         customers.add(alex);
@@ -46,7 +46,7 @@ public class CustomerListDataAccessService implements CustomerDao {
      * @return an Optional containing the customer if found, or an empty Optional if not found
      */
     @Override
-    public Optional<Customer> selectCustomerById(Integer customerId) {
+    public Optional<Customer> selectCustomerById(Long customerId) {
         return customers.stream()
                 .filter(c -> c.getId().equals(customerId))
                 .findFirst();
@@ -81,7 +81,7 @@ public class CustomerListDataAccessService implements CustomerDao {
      * @param customerId is the ID of the customer.
      */
     @Override
-    public void deleteCustomer(Integer customerId) {
+    public void deleteCustomer(Long customerId) {
         throw new UnsupportedOperationException(THIS_METHOD_IS_NOT_IMPLEMENTED);
     }
 
@@ -103,7 +103,7 @@ public class CustomerListDataAccessService implements CustomerDao {
      * @return {@code true} if a customer with the ID exists, {@code false} otherwise
      */
     @Override
-    public boolean existCustomerWithId(Integer customerId) {
+    public boolean existCustomerWithId(Long customerId) {
         throw new UnsupportedOperationException(THIS_METHOD_IS_NOT_IMPLEMENTED);
     }
 }

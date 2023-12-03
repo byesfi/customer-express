@@ -220,7 +220,7 @@ class CustomerServiceImplTest {
     @DisplayName("Delete Customer - Valid Customer ID")
     void deleteCustomer_ValidCustomerId_CallsDeleteCustomer() {
         // Arrange
-        Integer customerId = 1;
+        Long customerId = 1L;
         when(customerDao.existCustomerWithId(customerId)).thenReturn(true);
 
         // Act
@@ -234,7 +234,7 @@ class CustomerServiceImplTest {
     @DisplayName("Delete Customer - Invalid Customer ID")
     void deleteCustomer_InvalidCustomerId_ThrowsResourceNotFound() {
         // Arrange
-        Integer customerId = 1;
+        Long customerId = 1L;
         doThrow(ResourceNotFoundException.class).when(customerDao).existCustomerWithId(customerId);
 
         // Act & Assert

@@ -39,33 +39,33 @@ class CustomerJpaDataAccessServiceTest {
     @Test
     @DisplayName("Get Customer By ID - Customer Found")
     void testGetCustomerById_CustomerFound() {
-        Customer expectedCustomer = new Customer(1, "Bob", "bob@email.com", 33);
-        when(customerRepository.findById(1)).thenReturn(Optional.of(expectedCustomer));
+        Customer expectedCustomer = new Customer(1L, "Bob", "bob@email.com", 33);
+        when(customerRepository.findById(1L)).thenReturn(Optional.of(expectedCustomer));
 
-        Optional<Customer> result = customerDao.selectCustomerById(1);
+        Optional<Customer> result = customerDao.selectCustomerById(1L);
 
         assertTrue(result.isPresent());
         assertEquals(expectedCustomer, result.get());
-        verify(customerRepository, times(1)).findById(1);
+        verify(customerRepository, times(1)).findById(1L);
     }
 
     @Test
     @DisplayName("Get Customer By ID - Customer Not Found")
     void testGetCustomerById_CustomerNotFound() {
-        when(customerRepository.findById(1)).thenReturn(Optional.empty());
+        when(customerRepository.findById(1L)).thenReturn(Optional.empty());
 
-        Optional<Customer> result = customerDao.selectCustomerById(1);
+        Optional<Customer> result = customerDao.selectCustomerById(1L);
 
         assertTrue(result.isEmpty());
-        verify(customerRepository, times(1)).findById(1);
+        verify(customerRepository, times(1)).findById(1L);
     }
 
     @Test
     @DisplayName("Get All Customers")
     void testGetAllCustomers() {
         List<Customer> expectedCustomers = Arrays.asList(
-                new Customer(1, "Bob", "bob@email.com", 33),
-                new Customer(2, "Alex", "alex@email.com", 18)
+                new Customer(1L, "Bob", "bob@email.com", 33),
+                new Customer(2L, "Alex", "alex@email.com", 18)
         );
         when(customerRepository.findAll()).thenReturn(expectedCustomers);
 
@@ -80,7 +80,7 @@ class CustomerJpaDataAccessServiceTest {
     @DisplayName("Update Customer - Valid Customer")
     void updateCustomer_ValidCustomer_UpdatesExistingCustomer() {
         // Arrange
-        Integer customerId = 1;
+        Long customerId = 1L;
         Customer updatedCustomer = new Customer(customerId, "Jane Smith", "jane@example.com", 25);
 
         // Act
@@ -94,7 +94,7 @@ class CustomerJpaDataAccessServiceTest {
     @DisplayName("Delete Customer - Valid Customer ID")
     void deleteCustomer_ValidCustomerId_DeletesCustomer() {
         // Arrange
-        Integer customerId = 1;
+        Long customerId = 1L;
 
         // Act
         customerDao.deleteCustomer(customerId);
