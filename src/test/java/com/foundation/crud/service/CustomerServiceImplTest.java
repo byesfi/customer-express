@@ -49,7 +49,7 @@ class CustomerServiceImplTest {
     @DisplayName("Get Customer By ID - Valid ID")
     void testGetCustomerById_ValidId_ReturnsCustomer() {
         // Arrange
-        Integer customerId = 1;
+        Long customerId = 1L;
         Customer customer = new Customer(customerId, "John Doe", "john.doe@example.com", 25);
 
         // Mock dependencies
@@ -71,7 +71,7 @@ class CustomerServiceImplTest {
     @DisplayName("Get Customer By ID - Invalid ID")
     void testGetCustomerById_InvalidId_ThrowsResourceNotFound() {
         // Arrange
-        Integer customerId = 1;
+        Long customerId = 1L;
 
         // Mock dependencies
         when(customerDao.selectCustomerById(customerId)).thenReturn(Optional.empty());
@@ -86,8 +86,8 @@ class CustomerServiceImplTest {
     void testGetAllCustomers_ReturnsListOfCustomers() {
         // Arrange
         List<Customer> customers = new ArrayList<>();
-        customers.add(new Customer(1, "John Doe", "john.doe@example.com", 25));
-        customers.add(new Customer(2, "Jane Smith", "jane.smith@example.com", 30));
+        customers.add(new Customer(1L, "John Doe", "john.doe@example.com", 25));
+        customers.add(new Customer(2L, "Jane Smith", "jane.smith@example.com", 30));
 
         // Mock dependencies
         when(customerDao.selectAllCustomers()).thenReturn(customers);
@@ -135,7 +135,7 @@ class CustomerServiceImplTest {
     @DisplayName("Update Customer - Valid Customer")
     void updateCustomer_ValidCustomer_CallsUpdateCustomer() {
         // Arrange
-        Integer customerId = 1;
+        Long customerId = 1L;
         CustomerUpdateRequest customerUpdateRequest = new CustomerUpdateRequest("John Doe", "john.doe@example.com", 30);
         Customer existingCustomer = new Customer(customerId, "Old Name", "old.name@example.com", 25);
 
@@ -162,7 +162,7 @@ class CustomerServiceImplTest {
     @DisplayName("Update Customer - Invalid Customer ID")
     void updateCustomer_InvalidCustomerId_ThrowsResourceNotFound() {
         // Arrange
-        Integer customerId = 1;
+        Long customerId = 1L;
         CustomerUpdateRequest customerUpdateRequest = new CustomerUpdateRequest("Jane Smith", "jane@example.com", 25);
 
         // Mock dependencies
@@ -179,7 +179,7 @@ class CustomerServiceImplTest {
     @DisplayName("Update Customer - Already Existing Customer Email")
     void testUpdateCustomer_WithExistingEmail() {
         // Arrange
-        Integer customerId = 1;
+        Long customerId = 1L;
         CustomerUpdateRequest updateRequest = new CustomerUpdateRequest("New Name", "existing.email@example.com", 30);
         Customer existingCustomer = new Customer(customerId, "Old Name", "old.email@example.com", 25);
 
@@ -200,7 +200,7 @@ class CustomerServiceImplTest {
     @DisplayName("Update Customer - No Changes")
     void testUpdateCustomer_NoChanges() {
         // Arrange
-        Integer customerId = 1;
+        Long customerId = 1L;
         CustomerUpdateRequest updateRequest = new CustomerUpdateRequest(null, null, -1); // No changes
         Customer existingCustomer = new Customer(customerId, "Old Name", "old.email@example.com", 25);
 

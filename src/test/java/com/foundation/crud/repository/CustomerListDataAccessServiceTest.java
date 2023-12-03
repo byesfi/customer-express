@@ -37,10 +37,10 @@ class CustomerListDataAccessServiceTest {
     @Test
     @DisplayName("Get Customer By ID - Customer Found")
     void testGetCustomerById_CustomerFound() {
-        Customer expectedCustomer = new Customer(1, "Bob", "bob@email.com", 33);
+        Customer expectedCustomer = new Customer(1L, "Bob", "bob@email.com", 33);
         when(customersMock.stream()).thenReturn(Arrays.stream(new Customer[]{expectedCustomer}));
 
-        Optional<Customer> result = customerDao.selectCustomerById(1);
+        Optional<Customer> result = customerDao.selectCustomerById(1L);
 
         assertTrue(result.isPresent());
         assertEquals(expectedCustomer, result.get());
@@ -52,7 +52,7 @@ class CustomerListDataAccessServiceTest {
     void testGetCustomerById_CustomerNotFound() {
         when(customersMock.stream()).thenReturn(Arrays.stream(new Customer[]{}));
 
-        Optional<Customer> result = customerDao.selectCustomerById(1);
+        Optional<Customer> result = customerDao.selectCustomerById(1L);
 
         assertTrue(result.isEmpty());
         verify(customersMock, times(1)).stream();
@@ -62,8 +62,8 @@ class CustomerListDataAccessServiceTest {
     @DisplayName("Get All Customers")
     void testGetAllCustomers() {
         List<Customer> expectedCustomers = Arrays.asList(
-                new Customer(1, "Bob", "bob@email.com", 33),
-                new Customer(2, "Alex", "alex@email.com", 18)
+                new Customer(1L, "Bob", "bob@email.com", 33),
+                new Customer(2L, "Alex", "alex@email.com", 18)
         );
         CustomerListDataAccessService.setCustomers(expectedCustomers);
 

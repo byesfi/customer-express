@@ -19,7 +19,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -41,8 +41,8 @@ class CustomerControllerTestIT {
     @DisplayName("Get all customers - Returns list of customers")
     void testGetCustomers_ReturnsListOfCustomers() throws Exception {
         // Arrange
-        Customer customer1 = new Customer(1, "John Doe", "john@example.com", 30);
-        Customer customer2 = new Customer(2, "Jane Smith", "jane@example.com", 25);
+        Customer customer1 = new Customer(1L, "John Doe", "john@example.com", 30);
+        Customer customer2 = new Customer(2L, "Jane Smith", "jane@example.com", 25);
         List<Customer> customers = Arrays.asList(customer1, customer2);
 
         when(customerService.getAllCustomers()).thenReturn(customers);
@@ -50,7 +50,7 @@ class CustomerControllerTestIT {
         // Act & Assert
         mockMvc.perform(get("/api/v1/customers"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].id").value(1))
+                .andExpect(jsonPath("$[0].id").value(1L))
                 .andExpect(jsonPath("$[0].name").value("John Doe"))
                 .andExpect(jsonPath("$[1].id").value(2))
                 .andExpect(jsonPath("$[1].name").value("Jane Smith"));
@@ -60,14 +60,14 @@ class CustomerControllerTestIT {
     @DisplayName("Get customer by ID - Returns customer")
     void testGetCustomer_ValidId_ReturnsCustomer() throws Exception {
         // Arrange
-        Customer customer = new Customer(1, "John Doe", "john@example.com", 30);
+        Customer customer = new Customer(1L, "John Doe", "john@example.com", 30);
 
-        when(customerService.getCustomerById(anyInt())).thenReturn(customer);
+        when(customerService.getCustomerById(anyLong())).thenReturn(customer);
 
         // Act & Assert
         mockMvc.perform(get("/api/v1/customers/{customerId}", 1))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(1))
+                .andExpect(jsonPath("$.id").value(1L))
                 .andExpect(jsonPath("$.name").value("John Doe"));
     }
 
@@ -96,7 +96,7 @@ class CustomerControllerTestIT {
                         .content(asJsonString(customerUpdateRequest)))
                 .andExpect(MockMvcResultMatchers.status().isOk());
 
-        verify(customerService, times(1)).updateCustomer(anyInt(), any(CustomerUpdateRequest.class));
+        verify(customerService, times(1)).updateCustomer(anyLong(), any(CustomerUpdateRequest.class));
     }
 
     @Test
