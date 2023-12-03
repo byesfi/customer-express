@@ -43,7 +43,7 @@ public class CustomerServiceImpl implements CustomerService {
      * @throws ResourceNotFoundException if no customer is found with the given ID
      */
     @Override
-    public Customer getCustomerById(Integer customerId) {
+    public Customer getCustomerById(Long customerId) {
         return customerDao.selectCustomerById(customerId)
                 .orElseThrow(() -> new ResourceNotFoundException("Customer with id [%s] not found.".formatted(customerId)));
     }
@@ -81,7 +81,7 @@ public class CustomerServiceImpl implements CustomerService {
      */
     @Transactional
     @Override
-    public void updateCustomer(Integer customerId, CustomerUpdateRequest updateRequest) {
+    public void updateCustomer(Long customerId, CustomerUpdateRequest updateRequest) {
         Customer existingCustomer = getCustomerById(customerId);
 
         boolean change = false;
@@ -118,7 +118,7 @@ public class CustomerServiceImpl implements CustomerService {
      * @param customerId the ID of the customer to delete.
      */
     @Override
-    public void deleteCustomer(Integer customerId) {
+    public void deleteCustomer(Long customerId) {
         if (!customerDao.existCustomerWithId(customerId)) {
             throw new ResourceNotFoundException("Customer with id [%s] is not found.".formatted(customerId));
         }

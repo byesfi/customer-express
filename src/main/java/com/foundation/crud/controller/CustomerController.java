@@ -51,7 +51,7 @@ public class CustomerController {
      * @return the customer with the specified ID.
      */
     @GetMapping("{customerId}")
-    public Customer getCustomer(@PathVariable("customerId") Integer customerId) {
+    public Customer getCustomer(@PathVariable("customerId") Long customerId) {
         return customerService.getCustomerById(customerId);
     }
 
@@ -72,7 +72,7 @@ public class CustomerController {
      * @param customerUpdateRequest the customerUpdateRequest object containing the updated information.
      */
     @PatchMapping("{customerId}")
-    public void updateCustomer(@PathVariable("customerId") Integer customerId, @RequestBody CustomerUpdateRequest customerUpdateRequest) {
+    public void updateCustomer(@PathVariable("customerId") Long customerId, @RequestBody CustomerUpdateRequest customerUpdateRequest) {
         customerService.updateCustomer(customerId, customerUpdateRequest);
     }
 
@@ -82,7 +82,7 @@ public class CustomerController {
      * @param customerId the ID of the customer to be deleted.
      */
     @DeleteMapping("{customerId}")
-    public void deleteCustomer(@PathVariable("customerId") Integer customerId) {
+    public void deleteCustomer(@PathVariable("customerId") Long customerId) {
         customerService.deleteCustomer(customerId);
     }
 }

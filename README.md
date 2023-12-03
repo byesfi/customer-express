@@ -26,8 +26,11 @@ To set up and run the application, follow the steps below:
 2. Navigate to the project directory: `cd customer-express`
 3. Open the project in your favorite IDE (e.g., IntelliJ IDEA, Eclipse)
 4. Build and run the Docker containers: `docker-compose up -d`
-5. Build the project using Maven: `mvn clean install`
-6. Run the application: `mvn spring-boot:run`
+5. Connect to postgres container: `docker exec -it postgres bash`
+6. Connect to postgres: `psql -U byesfi`
+7. Create customer database: `CREATE DATABASE customer;`
+8. Build the project using Maven: `mvn clean install`
+9. Run the application: `mvn spring-boot:run`
 
 The application will start running on `http://localhost:8080`.
 

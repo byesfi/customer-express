@@ -19,7 +19,7 @@ public class StartUpConfig {
 				Customer joe = new Customer("Joe", "joe@eamil.com", 22);
 				Customer angela = new Customer("angela", "angela@email.com", 21);
 				List<Customer> customers = List.of(bob, alex, angela, joe);
-				customerRepository.saveAll(customers);
+				//customerRepository.saveAll(customers);
 		};
 	}
 }

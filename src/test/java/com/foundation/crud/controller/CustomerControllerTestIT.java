@@ -102,7 +102,7 @@ class CustomerControllerTestIT {
     @Test
     @DisplayName("Delete customer - Returns successful response")
     void testDeleteCustomer() throws Exception {
-        Integer customerId = 1;
+        Long customerId = 1L;
 
         mockMvc.perform(MockMvcRequestBuilders
                         .delete("/api/v1/customers/{customerId}", customerId))

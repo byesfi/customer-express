@@ -17,7 +17,7 @@ public interface CustomerDao {
      * @param customerId the ID of the customer to retrieve
      * @return an Optional containing the customer with the specified ID, or an empty Optional if no customer is found
      */
-    Optional<Customer> selectCustomerById(Integer customerId);
+    Optional<Customer> selectCustomerById(Long customerId);
 
     /**
      * Retrieves all customers.
@@ -42,7 +42,7 @@ public interface CustomerDao {
      * Delete a customer from the system.
      * @param customerId is the ID of the customer.
      */
-    void deleteCustomer(Integer customerId);
+    void deleteCustomer(Long customerId);
 
     /**
      * Checks if a customer with the given email exists.
@@ -58,5 +58,5 @@ public interface CustomerDao {
      * @param customerId the customer ID to check for existence
      * @return {@code true} if a customer with the ID exists, {@code false} otherwise
      */
-    boolean existCustomerWithId(Integer customerId);
+    boolean existCustomerWithId(Long customerId);
 }
