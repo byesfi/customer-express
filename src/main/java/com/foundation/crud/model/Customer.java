@@ -24,7 +24,7 @@ import java.util.Objects;
                 )
         }
 )
-public class Customer {
+public class  Customer {
 
     @Id
     @SequenceGenerator(
