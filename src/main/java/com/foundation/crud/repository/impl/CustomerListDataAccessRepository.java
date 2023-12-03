@@ -12,7 +12,7 @@ import java.util.Optional;
  * Implementation of the CustomerDao interface that uses an in-memory list to store customer data.
  */
 @Repository("list")
-public class CustomerListDataAccessService implements CustomerDao {
+public class CustomerListDataAccessRepository implements CustomerDao {
 
     public static final String THIS_METHOD_IS_NOT_IMPLEMENTED = "This method is not implemented.";
     private static List<Customer> customers;
@@ -36,7 +36,7 @@ public class CustomerListDataAccessService implements CustomerDao {
      * @param customers the list of customers to set
      */
     public static void setCustomers(List<Customer> customers) {
-        CustomerListDataAccessService.customers = customers;
+        CustomerListDataAccessRepository.customers = customers;
     }
 
     /**

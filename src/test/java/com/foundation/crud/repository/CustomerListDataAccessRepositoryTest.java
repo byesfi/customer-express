@@ -1,7 +1,7 @@
 package com.foundation.crud.repository;
 
 import com.foundation.crud.model.Customer;
-import com.foundation.crud.repository.impl.CustomerListDataAccessService;
+import com.foundation.crud.repository.impl.CustomerListDataAccessRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,7 +21,7 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("CustomerListDataAccessService Test")
-class CustomerListDataAccessServiceTest {
+class CustomerListDataAccessRepositoryTest {
 
     private CustomerDao customerDao;
 
@@ -30,8 +30,8 @@ class CustomerListDataAccessServiceTest {
 
     @BeforeEach
     void setUp() {
-        customerDao = new CustomerListDataAccessService();
-        CustomerListDataAccessService.setCustomers(customersMock);
+        customerDao = new CustomerListDataAccessRepository();
+        CustomerListDataAccessRepository.setCustomers(customersMock);
     }
 
     @Test
@@ -65,7 +65,7 @@ class CustomerListDataAccessServiceTest {
                 new Customer(1L, "Bob", "bob@email.com", 33),
                 new Customer(2L, "Alex", "alex@email.com", 18)
         );
-        CustomerListDataAccessService.setCustomers(expectedCustomers);
+        CustomerListDataAccessRepository.setCustomers(expectedCustomers);
 
         List<Customer> result = customerDao.selectAllCustomers();
 

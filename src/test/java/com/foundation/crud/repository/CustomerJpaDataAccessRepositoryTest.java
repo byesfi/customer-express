@@ -2,7 +2,7 @@ package com.foundation.crud.repository;
 
 
 import com.foundation.crud.model.Customer;
-import com.foundation.crud.repository.impl.CustomerJpaDataAccessService;
+import com.foundation.crud.repository.impl.CustomerJpaDataAccessRepository;
 import com.foundation.crud.repository.jpa.CustomerRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -24,7 +24,7 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("CustomerJpaDataAccessService Test")
-class CustomerJpaDataAccessServiceTest {
+class CustomerJpaDataAccessRepositoryTest {
 
     private CustomerDao customerDao;
 
@@ -33,7 +33,7 @@ class CustomerJpaDataAccessServiceTest {
 
     @BeforeEach
     void setUp() {
-        customerDao = new CustomerJpaDataAccessService(customerRepository);
+        customerDao = new CustomerJpaDataAccessRepository(customerRepository);
     }
 
     @Test

@@ -1,6 +1,5 @@
 package com.foundation.crud.repository.impl;
 
-import com.foundation.crud.exception.ResourceNotFoundException;
 import com.foundation.crud.model.Customer;
 import com.foundation.crud.repository.CustomerDao;
 import com.foundation.crud.repository.jpa.CustomerRepository;
@@ -15,7 +14,7 @@ import java.util.Optional;
  * Provides data access methods to retrieve customer information from a database.
  */
 @Repository("jpa")
-public class CustomerJpaDataAccessService implements CustomerDao {
+public class CustomerJpaDataAccessRepository implements CustomerDao {
 
     private final CustomerRepository customerRepository;
 
@@ -24,7 +23,7 @@ public class CustomerJpaDataAccessService implements CustomerDao {
      *
      * @param customerRepository the repository for customer data access
      */
-    public CustomerJpaDataAccessService(CustomerRepository customerRepository) {
+    public CustomerJpaDataAccessRepository(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
     }
 

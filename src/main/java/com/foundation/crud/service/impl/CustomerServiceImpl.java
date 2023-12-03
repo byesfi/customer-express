@@ -31,7 +31,7 @@ public class CustomerServiceImpl implements CustomerService {
      *
      * @param customerDao the CustomerDao implementation to use
      */
-    public CustomerServiceImpl(@Qualifier("jpa") CustomerDao customerDao){
+    public CustomerServiceImpl(@Qualifier("jdbc") CustomerDao customerDao){
         this.customerDao = customerDao;
     }
 
