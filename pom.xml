@@ -14,9 +14,14 @@
 	<name>customer-express</name>
 	<description>Customer Express</description>
 	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<mapstruct.version>1.5.5.Final</mapstruct.version>
 		<java.version>17</java.version>
+		<language.compiler.level>17</language.compiler.level>
+		<sonar.organization>ecom-express</sonar.organization>
+		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -149,20 +154,15 @@
 										</limit>
 									</limits>
 								</rule>
-<!--								<rule>
-									<element>PACKAGE</element>
-									<limits>
-										<limit>
-											<counter>LINE</counter>
-											<value>COVEREDRATIO</value>
-											<minimum>0.50</minimum>
-										</limit>
-									</limits>
-								</rule>-->
 							</rules>
 						</configuration>
 					</execution>
 				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.sonarsource.scanner.maven</groupId>
+    			<artifactId>sonar-maven-plugin</artifactId>
+    			<version>3.9.1.2184</version>
 			</plugin>
 		</plugins>
 	</build>
