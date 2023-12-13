@@ -20,6 +20,8 @@
 		<language.compiler.level>17</language.compiler.level>
 		<sonar.organization>ecom-express</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
+		<jacocoReportPath>${project.basedir}/target/site</jacocoReportPath>
+		<sonar.coverage.jacoco.xmlReportPaths>${jacocoReportPath}/**/jacoco*.xml</sonar.coverage.jacoco.xmlReportPaths>
 	</properties>
 
 	<dependencies>
@@ -58,6 +60,24 @@
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 			<version>3.14.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.testcontainers</groupId>
+			<artifactId>junit-jupiter</artifactId>
+			<version>1.17.6</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.testcontainers</groupId>
+			<artifactId>testcontainers</artifactId>
+			<version>1.17.6</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.testcontainers</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>1.17.6</version>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 
