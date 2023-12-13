@@ -20,6 +20,8 @@
 		<language.compiler.level>17</language.compiler.level>
 		<sonar.organization>ecom-express</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
+		<jacocoReportPath>${project.basedir}/target/site</jacocoReportPath>
+		<sonar.coverage.jacoco.xmlReportPaths>${jacocoReportPath}/**/jacoco*.xml</sonar.coverage.jacoco.xmlReportPaths>
 	</properties>
 
 	<dependencies>
