@@ -1,23 +1,22 @@
 package com.foundation.crud.repository;
 
+import com.foundation.crud.AbstractTestcontainers;
 import org.assertj.core.api.Assertions;
+import org.flywaydb.core.Flyway;
 import org.junit.jupiter.api.Test;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 @Testcontainers
-class TestContainerTest {
-
-    @Container
-    private static final PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>("postgres:15.1")
-            .withDatabaseName("dyesfi-dao-unit-test")
-            .withUsername("byesfi")
-            .withPassword("password");
+class TestContainerTest extends AbstractTestcontainers {
 
     @Test
     void canStartPostgresDB() {
         Assertions.assertThat(postgreSQLContainer.isRunning()).isTrue();
         Assertions.assertThat(postgreSQLContainer.isCreated()).isTrue();
     }
+
 }
