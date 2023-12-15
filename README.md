@@ -2,6 +2,9 @@
 
 This project is a microservice implementation for customer management using Java, Spring Boot, and a relational database.
 
+![Build](https://github.com/github/docs/actions/workflows/pull_request.yml/badge.svg)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=byesfi_customer-express&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=byesfi_customer-express)
+
 ## Features
 
 - Retrieve all customers
