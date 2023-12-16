@@ -13,7 +13,7 @@ import java.util.Optional;
 public class CustomerJdbcDataAccessRepository implements CustomerDao {
 
     private static final String INSERT_CUSTOMER = "INSERT INTO customer(name, email, age) VALUES (?,?,?)";
-    private static final String UPDATE_CUSTOMER = "UPDATE customeR SET name = ?, email = ?, age = ? WHERE id = ?";
+    private static final String UPDATE_CUSTOMER = "UPDATE customer SET name = ?, email = ?, age = ? WHERE id = ?";
     private static final String SELECT_ALL_CUSTOMERS = "SELECT c.id, c.name, c.email, c.age FROM customer c";
     private static final String SELECT_CUSTOMER_BY_ID = "SELECT c.id, c.name, c.email, c.age FROM customer c WHERE c.id = ?";
     private static final String DELETE_FROM_CUSTOMER_WHERE_ID = "DELETE FROM customer c WHERE c.id = ?";
