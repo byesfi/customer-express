@@ -1,7 +1,8 @@
-package com.foundation.crud.repository;
+package com.foundation.crud.repository.impl;
 
 
 import com.foundation.crud.model.Customer;
+import com.foundation.crud.repository.CustomerDao;
 import com.foundation.crud.repository.impl.CustomerJpaDataAccessRepository;
 import com.foundation.crud.repository.jpa.CustomerRepository;
 import org.junit.jupiter.api.BeforeEach;
