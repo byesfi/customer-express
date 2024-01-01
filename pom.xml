@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -15,8 +16,6 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<mapstruct.version>1.5.5.Final</mapstruct.version>
-		<java.version>17</java.version>
-		<language.compiler.level>17</language.compiler.level>
 		<sonar.organization>ecom-express</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 		<jacocoReportPath>${project.basedir}/target/site</jacocoReportPath>
@@ -98,7 +97,7 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.8.1</version>
 				<configuration>
-					<release>17</release>
+					<release>21</release>
 					<annotationProcessorPaths>
 						<path>
 							<groupId>org.mapstruct</groupId>
