@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/byesfi/customer-express/compare/v1.0.0...v1.1.0) (2024-01-01)
+
+
+### Features
+
+* CRUD-23 configure github package. ([8472982](https://github.com/byesfi/customer-express/commit/8472982e84cb4a255278b8dd08336cbe06c95706))
+
 ## 1.0.0 (2023-12-17)
 
 
