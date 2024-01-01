@@ -4,6 +4,9 @@ server:
   include-message: always
 
 spring:
+ threads:
+  virtual:
+   enabled: true
  datasource:
   url: jdbc:postgresql://localhost:5432/customer
   username: byesfi
