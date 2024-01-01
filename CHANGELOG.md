@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/byesfi/customer-express/compare/v1.1.0...v1.2.0) (2024-01-01)
+
+
+### Features
+
+* CRUD-30 enable virtualThreads ([afc8ae9](https://github.com/byesfi/customer-express/commit/afc8ae952a765afd1c0f4a3977b056ff02966787))
+
 ## [1.1.0](https://github.com/byesfi/customer-express/compare/v1.0.0...v1.1.0) (2024-01-01)
 
 
