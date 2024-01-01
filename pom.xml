@@ -9,7 +9,7 @@
 	</parent>
 	<groupId>com.foundation</groupId>
 	<artifactId>customer-express</artifactId>
-	<version>1.2.0</version>
+	<version>1.2.1-SNAPSHOT</version>
 	<name>customer-express</name>
 	<description>Customer Express</description>
 	<properties>
