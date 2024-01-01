@@ -193,4 +193,12 @@
 			</plugin>
 		</plugins>
 	</build>
+
+	<distributionManagement>
+		<repository>
+			<id>github</id>
+			<name>GitHub byesfi Apache Maven Packages</name>
+			<url>https://maven.pkg.github.com/byesfi/customer-express</url>
+		</repository>
+	</distributionManagement>
 </project>
