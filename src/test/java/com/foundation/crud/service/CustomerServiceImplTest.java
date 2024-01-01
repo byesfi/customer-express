@@ -5,6 +5,7 @@ import com.foundation.crud.dto.CustomerUpdateRequest;
 import com.foundation.crud.exception.DuplicateResourceException;
 import com.foundation.crud.exception.RequestValidationException;
 import com.foundation.crud.exception.ResourceNotFoundException;
+import com.foundation.crud.mapper.CustomerMapper;
 import com.foundation.crud.model.Customer;
 import com.foundation.crud.repository.CustomerDao;
 import com.foundation.crud.service.impl.CustomerServiceImpl;
@@ -31,6 +32,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import static org.assertj.core.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("CustomerServiceImpl Test")
@@ -107,6 +109,7 @@ class CustomerServiceImplTest {
     void testCreateCustomer_EmailIsUnique_InsertsCustomer() {
         // Arrange
         CustomerRegistrationRequest customerRegistrationRequest = new CustomerRegistrationRequest("John Doe", "john.doe@example.com", 25 );
+        Customer customer = CustomerMapper.INSTANCE.toCustomer(customerRegistrationRequest);
 
         // Mock dependencies
         when(customerDao.existCustomerWithEmail(customerRegistrationRequest.email())).thenReturn(false);
@@ -115,7 +118,7 @@ class CustomerServiceImplTest {
         customerService.addCustomer(customerRegistrationRequest);
 
         // Assert
-        verify(customerDao).insertCustomer(any(Customer.class));
+        verify(customerDao).insertCustomer(customer);
     }
 
     @Test
