@@ -22,7 +22,7 @@
 		<testcontainers.version>1.17.6</testcontainers.version>
 		<testcontainers.postgresql.version>1.17.6</testcontainers.postgresql.version>
 		<junit-jupiter-testc.version>1.17.6</junit-jupiter-testc.version>
-		<commons-lang3.version>3.14.0</commons-lang3.version>
+		<commons-lang3.version>3.15.0</commons-lang3.version>
 		<maven-failsafe-plugin.version>3.2.2</maven-failsafe-plugin.version>
 		<jacoco-maven-plugin.version>0.8.11</jacoco-maven-plugin.version>
 		<sonar-maven-plugin.version>3.9.1.2184</sonar-maven-plugin.version>
