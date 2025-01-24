@@ -14,7 +14,7 @@
 	<description>Customer Express</description>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<mapstruct.version>1.6.0</mapstruct.version>
+		<mapstruct.version>1.6.3</mapstruct.version>
 		<sonar.organization>ecom-express</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 		<jacocoReportPath>${project.basedir}/target/site</jacocoReportPath>
